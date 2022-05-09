@@ -1,16 +1,20 @@
 import { useState, memo } from "react";
-import "./styles.css";
 
-const Text = memo(({ text }) => {
+const Text = ({ text }) => {
   const [clickTag, setClickTag] = useState(0);
 
   console.log(`rendering ${text}`);
   return (
-    <div onClick={() => setClickTag(clickTag + 1)}>
+    <div
+      onClick={() => {
+        console.log(1);
+        setClickTag(clickTag + 1);
+      }}
+    >
       子组件：{text} - {clickTag}
     </div>
   );
-});
+};
 
 export default function App() {
   console.log("rendering App");
