@@ -1,52 +1,30 @@
-import { useEffect, useState } from "react";
+import { useState, memo } from "react";
 import "./styles.css";
 
+const Text = memo(({ text }) => {
+  console.log(`rendering ${text}`);
+  return <div>子组件：{text}</div>;
+});
+
 export default function App() {
-  const [show, setShow] = useState(false);
-  const [show2, setShow2] = useState(false);
-
+  console.log("rendering App");
+  const [count, setCount] = useState(0);
   return (
-    <div className="App">
-      <h1
+    <>
+      <h1>Click count {count}</h1>
+      <Text text={"foo"} />
+      <Text text={"bar"} />
+      <button
         onClick={() => {
-          setShow(!show);
+          setCount(count + 1);
         }}
       >
-        {show ? "hide tab1" : "show tab1"}
-      </h1>
-      {show && <Tab1 />}
-      <h1
-        onClick={() => {
-          setShow2(!show2);
-        }}
-      >
-        {show2 ? "hide tab2" : "show tab2"}
-      </h1>
-      {show2 && <Tab2 />}
-    </div>
+        reset App(用来强制更新App组件)
+      </button>
+      <p>首次载入会初始化3个组件，之后点击只会初始化App</p>
+      <p>
+        <img src={require("./memo.png")} alt="memo.png" />
+      </p>
+    </>
   );
-}
-
-function Tab1() {
-  const [text, setText] = useState("loading tab1");
-
-  useEffect(() => {
-    setTimeout(() => {
-      setText("tab1");
-    }, 1000);
-  }, []);
-  console.log("render tab1");
-  return <div>{text}</div>;
-}
-
-function Tab2() {
-  const [text, setText] = useState("loading tab2");
-
-  useEffect(() => {
-    setTimeout(() => {
-      setText("tab2");
-    }, 1000);
-  }, []);
-  console.log("render tab2");
-  return <div>{text}</div>;
 }
