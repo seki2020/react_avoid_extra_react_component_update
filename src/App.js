@@ -2,18 +2,35 @@ import { useState, memo } from "react";
 import "./styles.css";
 
 const Text = memo(({ text }) => {
+  const [clickTag, setClickTag] = useState(0);
+
   console.log(`rendering ${text}`);
-  return <div>子组件：{text}</div>;
+  return (
+    <div onClick={() => setClickTag(clickTag + 1)}>
+      子组件：{text} - {clickTag}
+    </div>
+  );
 });
 
 export default function App() {
   console.log("rendering App");
   const [count, setCount] = useState(0);
+  const [isChildrenShow, toggleIsChildrenShow] = useState(true);
   return (
     <>
-      <h1>Click count {count}</h1>
-      <Text text={"foo"} />
-      <Text text={"bar"} />
+      <h1
+        onClick={() => {
+          toggleIsChildrenShow(!isChildrenShow);
+        }}
+      >
+        Click count {count}, CLICK to hide all children
+      </h1>
+      {isChildrenShow && (
+        <>
+          <Text text={"foo"} />
+          <Text text={"bar"} />
+        </>
+      )}
       <button
         onClick={() => {
           setCount(count + 1);
