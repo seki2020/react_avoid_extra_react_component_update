@@ -29,12 +29,10 @@ export default function App() {
       >
         Click count {count}, CLICK to hide all children
       </h1>
-      {isChildrenShow && (
-        <>
-          <Text text={"foo"} />
-          <Text text={"bar"} />
-        </>
-      )}
+      <div style={{ display: isChildrenShow ? "block" : "none" }}>
+        <Text text={"foo"} />
+        <Text text={"bar"} />
+      </div>
       <button
         onClick={() => {
           setCount(count + 1);
